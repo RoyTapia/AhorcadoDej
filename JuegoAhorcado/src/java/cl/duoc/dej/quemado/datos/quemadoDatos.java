@@ -11,13 +11,30 @@ package cl.duoc.dej.quemado.datos;
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-public class quemadoDatos {
+public abstract class quemadoDatos {
     String dbDriver = "org.apache.derby.jdbc.ClientDriver";
-    String dbUri = "jdbc:derby://localhost:1527/AhorcadoWords";
-        String dbUser = "a";
-        String dbPass = ".";
+    String dbUri = "jdbc:derby://localhost:1527/JuegoQuemado";
+        String dbUser = "monoquemado";
+        String dbPass = "monoquemado";
+        protected Connection conexion = null;
+    protected PreparedStatement pstmt = null;
+    protected Statement stmt = null;
+    protected ResultSet rs = null;
+    protected StringBuilder query = null;
+    
+    public quemadoDatos(){
+    try {
+            Class.forName(dbDriver).newInstance();
+            conexion = DriverManager.getConnection(
+                    dbUri, dbUser, dbPass);
 
+        } catch (Exception ex) {
+            throw new Error("error en la conexion",ex);
+        }
+    }
     
 }
